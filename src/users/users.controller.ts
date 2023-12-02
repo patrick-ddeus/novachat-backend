@@ -1,7 +1,10 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
+import { SignInDto } from './dto/auth.dto';
 
 @Controller('users')
 export class UsersController {
   @Post('sign-in')
-  signIn(Body:) {}
+  signIn(@Body() signInDto: SignInDto) {
+    s;
+  }
 }
