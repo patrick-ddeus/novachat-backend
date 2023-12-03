@@ -22,7 +22,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@index([id])
-  @@unique([username, email])
+  @@unique([username, email, password])
   @@map("Users")
 }
 

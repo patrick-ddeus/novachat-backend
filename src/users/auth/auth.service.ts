@@ -27,13 +27,18 @@ export class AuthService {
 
     const user = await this.userService.findByEmail(email);
 
-    if (!user) throw new UnauthorizedException();
+    if (!user) throw new UnauthorizedException('Email or password invalid!');
 
     const passwordIsValid = await bcrypt.compare(password, user.password);
 
-    if (!passwordIsValid) throw new UnauthorizedException();
+    if (!passwordIsValid)
+      throw new UnauthorizedException('Email or password invalid!');
 
-    return this.generateToken({ email: user.email, id: user.id });
+    return {
+      ...this.generateToken({ email: user.email, id: user.id }),
+      id: user.id,
+      username: user.username,
+    };
   }
 
   generateToken(payload: JWTPayload) {
