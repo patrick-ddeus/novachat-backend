@@ -15,6 +15,13 @@ export class UserService {
       const user = await this.userRepository.create({
         ...body,
         password: await bcrypt.hash(password, this.SALT),
+        profile: {
+          create: {
+            nickname: body.username,
+            aboutMe: '',
+            avatar: '',
+          },
+        },
       });
       return user;
     } catch (error) {

@@ -2,7 +2,6 @@ import {
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
-  WsResponse,
   WebSocketServer,
 } from '@nestjs/websockets';
 import { EventsService } from './event.service';
@@ -22,9 +21,7 @@ export class EventsGateway {
   }
 
   @SubscribeMessage('userSendingStatus')
-  handleUserSending(@MessageBody() data: string): WsResponse<unknown> {
-    const event = 'userSendingStatus';
+  handleUserSending(@MessageBody() data: string) {
     this.server.emit('userSendingStatus', data);
-    return { event, data };
   }
 }

@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { MessageDto } from './dto/message.dto';
-// authorId  Int
-//   content   String
-//   Channel   Channel? @relation(fields: [channelId], references: [id], onDelete: Cascade)
-//   channelId Int
+
 @Injectable()
 export class EventsService {
   constructor(private readonly prismaService: PrismaService) {}

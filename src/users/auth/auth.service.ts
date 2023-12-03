@@ -6,6 +6,7 @@ import { UserService } from '../users.service';
 import { exclude } from '../../utils/exclude';
 import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt/dist';
+import { ProfileService } from '../../profile/profile.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly profileService: ProfileService,
   ) {
     this.ISSUER = 'NovaChat';
   }

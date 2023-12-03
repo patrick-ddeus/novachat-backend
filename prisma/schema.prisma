@@ -17,12 +17,13 @@ model User {
   password String
   Message  Message[]
   Server   Server[]
+  profile  Profile?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([id])
   @@unique([username, email, password])
+  @@index([id])
   @@map("Users")
 }
 
@@ -31,6 +32,8 @@ model Profile {
   avatar   String
   nickname String
   aboutMe  String
+  userId   Int    @unique
+  user     User   @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

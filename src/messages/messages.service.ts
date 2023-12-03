@@ -6,6 +6,15 @@ export class MessagesService {
   constructor(private readonly prismaService: PrismaService) {}
 
   getMessages(channelId: number) {
-    return this.prismaService.message.findMany({ where: { channelId } });
+    return this.prismaService.message.findMany({
+      where: { channelId },
+      include: {
+        Author: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    });
   }
 }
