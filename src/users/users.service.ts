@@ -1,22 +1,29 @@
-import { Injectable } from '@nestjs/common/decorators/core';
-import { PrismaService } from '../prisma/prisma.service';
-import { SignInDto } from './dto/auth.dto';
+import { Injectable, ConflictException } from '@nestjs/common';
+import { SignUpDto } from './dto/signUp.dto';
 import * as bcrypt from 'bcrypt';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prismaService: PrismaService) {}
-  async createUser(body: SignInDto) {
-    const { email, password, username } = body;
-    const saltOrRounds = 12;
-    const hash = await bcrypt.hash(password, saltOrRounds);
+  private SALT = 12;
 
-    return await this.prismaService.user.create({
-      data: {
-        email,
-        password: hash,
-        username,
-      },
-    });
+  constructor(private readonly userRepository: UserRepository) {}
+  async createUser(body: SignUpDto) {
+    const { password } = body;
+
+    try {
+      const user = await this.userRepository.create({
+        ...body,
+        password: await bcrypt.hash(password, this.SALT),
+      });
+      return user;
+    } catch (error) {
+      if (error.code === 'P2002')
+        throw new ConflictException('Account already exists');
+    }
+  }
+
+  findByEmail(email: string) {
+    return this.userRepository.listOne({ email });
   }
 }

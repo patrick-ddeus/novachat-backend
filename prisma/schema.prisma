@@ -22,6 +22,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@index([id])
+  @@unique([username, email])
   @@map("Users")
 }
 
