@@ -10,7 +10,7 @@ export class ProfileController {
 
   @Get(':userId')
   @UseGuards(AuthGuard)
-  getHello(@Param('userId', ParseIntPipe) userId: number) {
+  getOneProfile(@Param('userId', ParseIntPipe) userId: number) {
     return this.profileService.getOneProfile(userId);
   }
 
