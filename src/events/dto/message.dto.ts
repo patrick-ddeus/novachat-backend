@@ -1,9 +1,8 @@
-// authorId  Int
-//   content   String
-//   Channel   Channel? @relation(fields: [channelId], references: [id], onDelete: Cascade)
-//   channelId Int
+import { IsNotEmpty } from 'class-validator';
+
 export class MessageDto {
   authorId: number;
+  @IsNotEmpty()
   content: string;
   author: string;
   channelId: number;
