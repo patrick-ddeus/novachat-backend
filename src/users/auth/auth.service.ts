@@ -21,7 +21,10 @@ export class AuthService {
   }
   async signUpUser(body: SignUpDto) {
     const user = await this.userService.createUser(body);
-    return exclude(user, 'password');
+    return {
+      ...exclude(user, 'password'),
+      ...this.generateToken({ email: user.email, id: user.id }),
+    };
   }
 
   async signInUser(body: SignInDto) {
